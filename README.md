@@ -4,6 +4,8 @@ Interactive multidimensional visualization system for exploring relationships be
 
 Draft of visualizations on:  [Observable draft prototype](https://observablehq.com/@snah/draft-spoty-viz)
 
+Data from: [Kaggle](https://www.kaggle.com/datasets/yamaerenay/spotify-dataset-1921-2020-160k-tracks?utm_source=&select=data.csv)
+
 ---
 
 ## Installation
