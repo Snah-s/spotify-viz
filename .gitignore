@@ -1,2 +1,4 @@
 data/*.csv
 docs
+__pycache__
+processed
