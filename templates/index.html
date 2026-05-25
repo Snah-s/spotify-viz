@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Spotify Multidimensional Visualization</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  </head>
+  <body>
+    <header class="hero">
+      <div>
+        <p class="eyebrow">DS5343 - Visualizacion de Datos</p>
+        <h1>Spotify Multidimensional Visualization</h1>
+        <p class="subtitle">RadViz, Star Coordinates, Parallel Coordinates, and PCA for exploring audio-feature patterns across Spotify tracks and genres.</p>
+      </div>
+      <div class="hero-card">
+        <strong>Analytical tasks</strong>
+        <span>Track clustering by audio features</span>
+        <span>Acoustic vs energetic contrast</span>
+        <span>Temporal and genre-level trends</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel controls">
+        <label>
+          Start year
+          <input id="year-min" type="range" min="1921" max="2020" value="1980" step="1">
+          <span id="year-min-value">1980</span>
+        </label>
+        <label>
+          End year
+          <input id="year-max" type="range" min="1921" max="2020" value="2020" step="1">
+          <span id="year-max-value">2020</span>
+        </label>
+        <label>
+          Minimum popularity
+          <input id="popularity" type="range" min="0" max="100" value="30" step="1">
+          <span id="popularity-value">30</span>
+        </label>
+        <label>
+          Color by
+          <select id="color-by">
+            <option value="year">Year</option>
+            <option value="popularity">Popularity</option>
+            <option value="energy">Energy</option>
+            <option value="danceability">Danceability</option>
+            <option value="acousticness">Acousticness</option>
+          </select>
+        </label>
+        <button id="reload">Update Views</button>
+        <button id="new-sample" class="secondary">New Random Sample</button>
+      </section>
+
+      <section class="stats" id="stats"></section>
+
+      <section class="grid two">
+        <article class="panel viz-card">
+          <div class="card-title">
+            <h2>RadViz</h2>
+            <p>Each feature is an anchor; tracks settle by weighted feature attraction.</p>
+          </div>
+          <div id="radviz" class="viz"></div>
+        </article>
+        <article class="panel viz-card">
+          <div class="card-title">
+            <h2>Star Coordinates</h2>
+            <p>Tracks are placed by summing normalized values along weighted vectors.</p>
+          </div>
+          <div id="star" class="viz"></div>
+        </article>
+      </section>
+
+      <section class="panel viz-card">
+        <div class="card-title">
+          <h2>Parallel Coordinates</h2>
+          <p>Brush any axis to highlight tracks matching multidimensional ranges.</p>
+        </div>
+        <div id="parallel" class="viz wide"></div>
+      </section>
+
+      <section class="grid two">
+        <article class="panel viz-card">
+          <div class="card-title">
+            <h2>PCA Projection</h2>
+            <p>Python preprocessing reduces ten audio features to two components.</p>
+          </div>
+          <div id="pca" class="viz"></div>
+        </article>
+        <article class="panel viz-card">
+          <div class="card-title">
+            <h2>Genre Contrast</h2>
+            <p>Genres positioned by acousticness and energy, sized by popularity.</p>
+          </div>
+          <div id="genres" class="viz"></div>
+        </article>
+      </section>
+
+      <section class="grid two">
+        <article class="panel viz-card">
+          <div class="card-title">
+            <h2>Year Trend</h2>
+            <p>Aggregated feature changes across the 1921-2020 dataset.</p>
+          </div>
+          <div id="years" class="viz"></div>
+        </article>
+        <article class="panel insights">
+          <h2>Draft Insights</h2>
+          <p><strong>High danceability and energy</strong> tend to pull popular tracks toward similar RadViz and Star Coordinate regions.</p>
+          <p><strong>Acousticness separates</strong> many genres from energetic clusters, especially in the genre contrast plot.</p>
+          <p><strong>Parallel brushing</strong> is useful for isolating high-energy or high-acousticness tracks and checking their behavior across all features.</p>
+        </article>
+      </section>
+    </main>
+
+    <div id="sample-modal" class="modal-backdrop">
+      <section class="modal panel">
+        <p class="eyebrow">Random sample</p>
+        <h2>Choose the sample size</h2>
+        <p>The app will generate a fresh random sample from the original Spotify CSV. The previous sample is overwritten, and the temporary sample is removed when Flask closes.</p>
+        <label>
+          Sample size, max 15000
+          <input id="sample-size" type="number" min="100" max="15000" value="5000" step="100">
+        </label>
+        <button id="start-sample">Generate Sample</button>
+        <p id="sample-status" class="status-text"></p>
+      </section>
+    </div>
+
+    <div id="tooltip" class="tooltip"></div>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
+</html>
