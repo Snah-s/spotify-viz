@@ -6,6 +6,32 @@ Draft of visualizations on:  [Observable draft prototype](https://observablehq.c
 
 ---
 
+## Installation
+
+### Normal venv
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python src/process_data.py
+flask --app app run --debug
+```
+
+### Micromamba or Conda
+
+```bash
+micromamba create -f environment.yml
+micromamba run -n spotify-viz python src/process_data.py
+micromamba run -n spotify-viz flask --app app run --debug
+```
+
+Open <http://127.0.0.1:5000>.
+
+When the page opens, choose a random sample size. The maximum is `15000` tracks to keep D3 visualizations responsive. The `New Random Sample` button generates a fresh sample and overwrites the previous runtime sample.
+
+---
+
 ## Overview
 
 This project explores how Spotify tracks evolve and cluster through multidimensional audio features such as energy, danceability, valence, acousticness, speechiness, instrumentalness, loudness, tempo, popularity, and liveness.
